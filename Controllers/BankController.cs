@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection.Metadata.Ecma335;
 using WebApplication5.Models;
 //this is the Contract btwn => server and client 
 namespace WebApplication5.Controllers
@@ -16,18 +17,34 @@ namespace WebApplication5.Controllers
         }
 
         [HttpGet]
-        public List<BankBranchResponse> GetAll()
+        public PageListResult<BankBranchResponse> GetAll(int page = 1, string search = "")
         {
-            return _bankContext.BankBranches.Select(b => new BankBranchResponse
+            if (search == "")
             {
+                return _bankContext.BankBranches
+                    //paging:
+                    //envolpe data about data :
 
-                LocationName = b.LocationName,
-                LocationURL = b.LocationURL,
+                    //.Skip((page-1)*3)
+                    //.Take(3)
+                    .Select(b => new BankBranchResponse
+                    {
+                        LocationName = b.LocationName,
+                        LocationURL = b.LocationURL,
 
 
-            }).ToList();
+                    }).ToPageList(page, 1);
+            }
+            return _bankContext.BankBranches
+                    .Where(r => r.LocationName.StartsWith(search))
+                     .Select(b => new BankBranchResponse
+                     {
+                         LocationName = b.LocationName,
+                         LocationURL = b.LocationURL,
+
+
+                     }).ToPageList(page, 1);
         }
-
         [HttpGet("{id}")]
         public ActionResult<BankBranchResponse> DetailsBank(int id)
         {
