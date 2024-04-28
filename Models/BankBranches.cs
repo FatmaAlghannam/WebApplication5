@@ -12,15 +12,5 @@ namespace WebApplication5.Models
         public int EmployeeCount { get; set; }
         public List<Employee> Employees { get; set; }
     }
-    //public class Employee
-    //{
-    //    public int Id { get; set; }
-    //    public int BankBranchId { get; set; } 
-    //    public string Name { get; set; }
-    //    [Required]
-    //    public string CivilID { get; set; }
-    //    public BankBranches BankBranch {  get; set; }
-    //    public string Position { get; set; }
-
-    //}
+   
 }

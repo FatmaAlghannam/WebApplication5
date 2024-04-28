@@ -9,6 +9,7 @@ namespace WebApplication5.Models
     {
         public DbSet<BankBranches> BankBranches { get; set; }
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<UserAccounts> UserAccounts { get; set; }
         public BankContext(DbContextOptions<BankContext> options) : base(options)
         {
         }
@@ -32,6 +33,7 @@ namespace WebApplication5.Models
 
 
         }
+        
     }
 
 }

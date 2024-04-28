@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection.Metadata.Ecma335;
 using WebApplication5.Models;
@@ -7,6 +8,7 @@ namespace WebApplication5.Controllers
 {
     [Route("api/bank")]
     [ApiController]
+    [Authorize]
     public class BankController : ControllerBase
     {
         private readonly BankContext _bankContext;
@@ -17,6 +19,7 @@ namespace WebApplication5.Controllers
         }
 
         [HttpGet]
+       // [AllowAnonymous]
         public PageListResult<BankBranchResponse> GetAll(int page = 1, string search = "")
         {
             if (search == "")
@@ -96,6 +99,7 @@ namespace WebApplication5.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles ="Admin")]
         public IActionResult Delete(int id)
         {
             var bank = _bankContext?.BankBranches.Find(id);
